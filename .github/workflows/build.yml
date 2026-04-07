@@ -14,37 +14,9 @@ jobs:
       - name: Extract project
         run: tar -xzf VideoLiveWallpaperPro.tar.gz
 
-      - name: Install Gradle via SDKMAN
-        run: |
-          curl -s "https://get.sdkman.io" | bash
-          source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install gradle 8.2
-          echo "$HOME/.sdkman/candidates/gradle/current/bin" >> $GITHUB_PATH
-
-      - name: Generate Gradle Wrapper
-        run: |
-          cd VideoLiveWallpaperPro
-          gradle wrapper --gradle-version=8.2
-
       - name: Build APK
         run: |
           cd VideoLiveWallpaperPro
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: VideoWallpaper-APK
-          path: VideoLiveWallpaperPro/app/build/outputs/apk/debug/app-debug.apk
-      - name: Extract project
-        run: tar -xzf VideoLiveWallpaperPro.tar.gz
-
-      - name: Build APK
-        run: |
-          export PATH=$PATH:$PWD/gradle-8.2/bin
-          cd VideoLiveWallpaperPro
-          gradle wrapper
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
